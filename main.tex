@@ -25,7 +25,9 @@
 \end{frame}
 \section{Введение}
 \begin{frame}
-Вводим героя и его задачу найти путь
+\begin{tikzpicture}
+	\node[text width=2cm] (a) {\reflectbox{\includegraphics[width=\textwidth]{Pics/Tourist.png}}};
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}
@@ -90,7 +92,7 @@
 		
 		{\bfseries Алгоритм Дейкстры} & {\bfseries Алгоритм Беллмана-Форда}\\
 
-		Последовательно перебирает все окрестные вершины, пока не выберет  целевую вершинув качестве активной. & Последовательно релаксирует по всем ребрам для каждой вершины, в итоге получает матрицу с кратчайшеми весами от $s$ до всех остальных вершин.\\
+		Последовательно перебирает все окрестные вершины, пока не выберет  целевую вершинув качестве активной. & Последовательно релаксирует по всем ребрам для каждой длины пути, в итоге получает матрицу с кратчайшими весами от $s$ до всех остальных вершин.\\
 		\begin{itemize}
 			\item[$+$] Работает быстро $\mathcal{O}(n\log m)$
 			\item[$-$] Не работает с отрицательными весами
@@ -157,9 +159,10 @@
 	\frametitle{Обстановка изменчива}
 \begin{columns}
 	\column{.5\textwidth}
-	Джон едет на (Герое асфальта)
+	\includegraphics[width=\textwidth]{Pics/Asphalt.png}
+	\pause
 	\column{.5\textwidth}
-	Джон стоит в пробке в городе
+	\includegraphics[width=\textwidth]{Pics/Jam.png}
 \end{columns}
 \end{frame}
 
