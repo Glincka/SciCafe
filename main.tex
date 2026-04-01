@@ -2,7 +2,7 @@
 
 
 \usepackage{beamerSFU-VKR}
-\usetikzlibrary{fit,shapes,backgrounds,hobby,arrows.meta,decorations,decorations.pathreplacing}
+\usetikzlibrary{fit,shapes,backgrounds,hobby,arrows.meta,decorations,decorations.pathreplacing,shapes.callouts}
 \institute[ИМиФИ СФУ]{ФГАОУ ВО <<Сибирский федеральный университет>>\\
     Институт математики  и фундаментальной информатики\\
 	Кафедра высшей и прикладной математики  \\                                  
@@ -24,15 +24,31 @@
 \titlepage
 \end{frame}
 \section{Введение}
+
 \begin{frame}
 \begin{tikzpicture}
 	\node[text width=2cm] (a) {\reflectbox{\includegraphics[width=\textwidth]{Pics/Tourist.png}}};
+	\node[text width=2cm,right=of a] {\includegraphics[width=\textwidth]{Pics/water-fountain.png}};
+	\node[text width=2cm, above right=.75cm and 1.5cm of a] (b) {\includegraphics[width=\textwidth]{Pics/clock-tower.png}};
+	\node[text width=2cm, below right=.25cm and 1.25cm of a] (c) {\includegraphics[width=\textwidth]{Pics/moai.png}};
+	\node[text width=2cm, above right=.5cm and .5cm of c] (d) {\includegraphics[width=\textwidth]{Pics/observatory.png}};
+	\node[text width=2cm, above right=.6cm and .25cm of d] (e) {\includegraphics[width=\textwidth]{Pics/mayan-pyramid.png}};
+	\node[text width=2cm, below right=.3cm and .35cm of d] (f) {\includegraphics[width=\textwidth]{Pics/hobbit-dwelling.png}};
+	\node[text width=2cm, below right=.23cm and .35cm of e] (g) {\includegraphics[width=\textwidth]{Pics/control-tower.png}};
 \end{tikzpicture}
 \end{frame}
 
 \begin{frame}
 \frametitle{Абстракция}
-Добавляем картинки возможных пожеланий в пути, и отказывается от них.
+\begin{tikzpicture}
+	
+	\node[text width=7cm] (a) {\includegraphics[width=\textwidth]{Pics/beamer.png}};
+	\pause
+	\node[text width=2cm,left=.25cm of a] (b) {\includegraphics[width=\textwidth]{Pics/petcat.png}};
+	\pause
+	\node[text width=2cm,right=.25cm of a] (c) {\includegraphics[width=\textwidth]{Pics/cherrypie.png}};
+	\node[text width=3cm,above right=-1cm and -1cm of c] (d) {\includegraphics[width=\textwidth]{Pics/coffee.png}};
+\end{tikzpicture}
 \end{frame}
 \section{Кратчайший путь}
 \begin{frame}
@@ -42,7 +58,7 @@
 		\item $V$ -- множество вершин, при этом $|V|=n$;
 		\item $E$ -- множество ребер, как подмножество $V\times V$, при этом $|E|=m$;
 		\item $G=(V,E)$ -- граф c вершинами $V$ и ребрами $E$;
-		\item $w(e)$ -- весовая функция $w(e)\colon E\rightarrow \mathbb{R}$, где $e=(u,v)\in E$ и $u,v\in V$;
+		\item Весовая функция $w(e)\colon E\rightarrow \mathbb{R}$, где $e=(u,v)\in E$ и $u,v\in V$;
 		\item Путь $P$ -- последовательность вершин $\{s=v_1,v_2,\dots, v_{n-1},d=v_{n}\}$, 
 		
 		\hfill где $(v_i,v_{i+1})\in E$ и $v_i\neq v_{i+1}$;
@@ -92,7 +108,7 @@
 		
 		{\bfseries Алгоритм Дейкстры} & {\bfseries Алгоритм Беллмана-Форда}\\
 
-		Последовательно перебирает все окрестные вершины, пока не выберет  целевую вершинув качестве активной. & Последовательно релаксирует по всем ребрам для каждой длины пути, в итоге получает матрицу с кратчайшими весами от $s$ до всех остальных вершин.\\
+		Последовательно перебирает все окрестные вершины, пока не выберет  целевую вершину в качестве активной. & Последовательно релаксирует по всем ребрам для каждой длины пути, в итоге получает матрицу с кратчайшими весами от $s$ до всех остальных вершин.\\
 		\begin{itemize}
 			\item[$+$] Работает быстро $\mathcal{O}(n\log m)$
 			\item[$-$] Не работает с отрицательными весами
@@ -104,53 +120,135 @@
 		\end{itemize}\\
 	\end{tabular}
 
-	Иллюстративный пример с графами!
+\end{frame}
 
+\begin{frame}
+	\centering
+	\includegraphics[height = \paperheight]{Pics/Di.png}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Как можно сделать это быстрее?}
-	Джон стоит и вопрашает, на кой черт ему все эти графы, когда от стоит вот тут и видит цель своего путешествия, зачем мне перебирать всё и сразу.
-
+	\begin{overprint}
+		\onslide<1>
+		\begin{tikzpicture}
+	\node[text width=2cm] (a) {\reflectbox{\includegraphics[width=\textwidth]{Pics/Tourist.png}}};
+	\node[draw, cloud callout, cloud puffs=15, aspect=2.5, cloud puff arc=120,text width = 3cm,anchor = pointer,above left=.5 and -1.5 of a,align=center] {Зачем мне эти графы? Я же вижу цель!};	
+	\node[text width=4cm,above right=.25 and 4 of a] {\includegraphics[width=\textwidth]{Pics/control-tower.png}};
+	\end{tikzpicture}
+	\onslide<2>
+	\begin{tikzpicture}
+	\node[text width=2cm] (a) {\reflectbox{\includegraphics[width=\textwidth]{Pics/Tourist.png}}};
+	\node[draw, cloud callout, cloud puffs=15, aspect=2.5, cloud puff arc=120,text width = 3cm,anchor = pointer,above left=.5 and -1.5 of a,align=center] {Чёрт!};	
+	\node[text width=4cm,above right=.25 and 4 of a] {\includegraphics[width=\textwidth]{Pics/control-tower.png}};
+	\node[text width = 7cm, right=of a] {\reflectbox{\includegraphics[width=\textwidth]{Pics/river.png}}};
+	\end{tikzpicture}
+	\end{overprint}
+	
 \end{frame}
 
 \begin{frame}
 	\frametitle{Как можно сделать это быстрее?}
-	Введем некотороую функцию $\pi(v)$, которая оценивая оставшийся путь от $v$ до $d$. Функция $\pi(v)$ называется потенциальной если удовлетворяет двум свойствам.
+	Введем некоторую функцию $\pi(v)$, которая оценивая оставшийся путь от $v$ до $d$. Функция $\pi(v)$ называется потенциальной если удовлетворяет двум свойствам.
 	\begin{block}{Свойства потенциальной функции}
 		\begin{itemize}
 			\item \textbf{Допустимость} $$\pi(v) \leq dist(v,d);$$
 			\item \textbf{Преемственность} $$\pi(v)\leq dist(v,u) + \pi(u).$$
 		\end{itemize}
 	\end{block}
-
-	Пример с картой, линейкой и Джоном
-\end{frame}
-
-\begin{frame}
-	\frametitle{Ещё быстрее?!}
-	Если мы используем вооброжаемого близнеца Джона по имени Ножд, то он поможет сделать путь быстрее.
-
-	Дурацкий пример с ними.
+	\vspace*{-1cm}
+	\begin{center}
+		\begin{tikzpicture}
+		\node[text width = 5cm] {\includegraphics[width=\textwidth]{Pics/map.png}};
+		\node[text width = 3cm,rotate=30] {\includegraphics[width=\textwidth]{Pics/rule.png}};
+		\end{tikzpicture}
+	\end{center}
+	
 \end{frame}
 
 \begin{frame}
 	\frametitle{Ещё быстрее?!}
 	\centering
-	\begin{tikzpicture}
-		\node (a) {Предобработка};
-		\node[below left=of a] (land) {Ориентиры};
-		\node[below=of a] (hier) {Иерархия};
-		\node[below right=of a] (mark) {Маркировка};
-		\node[below=of land] {Картинка};
-		\node[below=of hier] {Картинка};
-		\node[below=of mark] {Картинка};
+	\begin{tikzpicture}[node distance = .1]
+		\node[text width = 2cm] (a) {\reflectbox{\includegraphics[width=\textwidth]{Pics/Tourist.png}}};
+		\node[text width = 10cm,right=of a] (b) {\includegraphics[height=\paperheight]{Pics/Bi.png}};
+		\node[text width = 2cm,right=of b] (c) {\includegraphics[width=\textwidth]{Pics/Tourist.png}};
 	\end{tikzpicture}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Ещё быстрее?!}
-	Вставить картинки из Гольдберга
+	\begin{overprint}
+		\onslide<1>
+		\begin{center}
+			\begin{tikzpicture}[node distance = .5]
+		\node (a) {Предобработка};
+		\node[below left=of a] (land) {Ориентиры};
+		\node[below=of a] (hier) {Иерархия};
+		\node[below right=of a] (mark) {Маркировка};
+		\draw[->] (a) -- (land);
+		\draw[->] (a) -- (hier);
+		\draw[->] (a) -- (mark);
+	\end{tikzpicture}
+		\end{center}
+		
+	\onslide<2>
+	\begin{center}
+			\begin{tikzpicture}[node distance = .5]
+		\node (a) {Предобработка};
+		\node[below left=of a,draw,red] (land) {Ориентиры};
+		\node[below=of a] (hier) {Иерархия};
+		\node[below right=of a] (mark) {Маркировка};
+		\draw[->] (a) -- (land);
+		\draw[->] (a) -- (hier);
+		\draw[->] (a) -- (mark);
+	\end{tikzpicture}
+	\includegraphics[height = .5\paperheight]{Pics/mountain.png}
+		\end{center}
+
+	
+	\onslide<3>
+	\begin{center}
+			\begin{tikzpicture}[node distance = .5]
+		\node (a) {Предобработка};
+		\node[below left=of a,draw,red] (land) {Ориентиры};
+		\node[below=of a] (hier) {Иерархия};
+		\node[below right=of a] (mark) {Маркировка};
+		\draw[->] (a) -- (land);
+		\draw[->] (a) -- (hier);
+		\draw[->] (a) -- (mark);
+	\end{tikzpicture}
+	\includegraphics[height = .5\paperheight,clip,trim=100 0 100 0]{Pics/expedition.jpg}
+		\end{center}
+	
+	\onslide<4>
+	\begin{center}
+			\begin{tikzpicture}[node distance = .5]
+		\node (a) {Предобработка};
+		\node[below left=of a] (land) {Ориентиры};
+		\node[below=of a,draw,red] (hier) {Иерархия};
+		\node[below right=of a] (mark) {Маркировка};
+		\draw[->] (a) -- (land);
+		\draw[->] (a) -- (hier);
+		\draw[->] (a) -- (mark);
+	\end{tikzpicture}
+	\includegraphics[height = .4\paperheight]{Pics/hier.jpg}
+		\end{center}
+	\onslide<5>
+	\begin{center}
+			\begin{tikzpicture}[node distance = .5]
+		\node (a) {Предобработка};
+		\node[below left=of a] (land) {Ориентиры};
+		\node[below=of a] (hier) {Иерархия};
+		\node[below right=of a,draw,red] (mark) {Маркировка};
+		\draw[->] (a) -- (land);
+		\draw[->] (a) -- (hier);
+		\draw[->] (a) -- (mark);
+	\end{tikzpicture}
+	\includegraphics[height = .5\paperheight]{Pics/arc.jpg}
+		\end{center}
+	\end{overprint}
+	
 \end{frame}
 
 \section{Живые графы}
@@ -170,8 +268,8 @@
 	\frametitle{Обстановка изменчива}
 	\begin{block}{Определения}
 		\begin{itemize}
-			\item Величина $t>0$, измеряется в условных единичах времени и принимает значения из некоторого конечного множества $T$;
-			\item Весовая функция $w_{xy}(t)\geq 0$ зависящая от времени $t$ для ребра $(x,y)\in E$;
+			\item Величина $t>0$, измеряется в условных единицах времени и принимает значения из некоторого конечного множества $T$;
+			\item Весовая функция $w_{xy}(t)\geq 0$, зависящая от времени $t$, для ребра $(x,y)\in E$;
 			\item Функция прибытия $F_{xy}(t) = t+w_{xy}(t)$, где
 			
 			\qquad $t$ -- время отправления из $x$, 
@@ -259,39 +357,53 @@
 
 \begin{frame}
 	\frametitle{Решение есть}
-	Алгоритм Дейкстры и ALT.
+	\begin{block}{Задача Time-Dependend Shortest Path}
+		\begin{tabular}{>{\bfseries}rp{.8\textwidth}}
+			Дано: & нестационарный граф $G=(V,E)$, весовая функция $w_{xy}(t)$, удовлетворяющая условию FIFO, стартовая вершина $s$ и целевая вершина~$d$.\\
+			Требуется: & найти кратчайший путь $P$ и последовательность образующих его вершин.
+		\end{tabular}
+	\end{block}
+	Алгоритм Дейкстры с небольшой доработкой способен решать задачу TDSP.
+	
 \end{frame}
 
 \begin{frame}
-	\frametitle{Обстановка наколяется}
-	Картинки с Джоном, ядерным взрывом и нарушителями движения.
+	\frametitle{Обстановка накаляется}
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/bang.png}
 \end{frame}
 
 
 \begin{frame}
 	\frametitle{Быстрого решения нет}
-	Картинки с Джоном скелетом на фоне пустошь
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/Death.png}
 \end{frame}
 
 \section{Мертвые дороги}
 
 \begin{frame}
 	\frametitle{Жизнь после\dots}
-	На сцену выходит Макс рядом с интерцептором.
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/Max.png}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Жизнь после\dots}
 	\begin{columns}
 		\column{.5\textwidth}
-		Карта местности Макса
+		\includegraphics[width=\textwidth]{Pics/postmap.png}
+
+		\includegraphics[width=.3\textwidth]{Pics/jerrycan.png}
+		\includegraphics[width=.3\textwidth]{Pics/can.png}
+		\includegraphics[width=.3\textwidth]{Pics/magazine.png}
 		\column{.5\textwidth}
 		\begin{block}{Определения}
 			\begin{itemize}
 				\item Функции ресурса $r_i(e)\colon E\rightarrow \mathbb{R}$;
 				\item Величины ограничений ресурса $R_i$;
 				\item Траты пути $r_i(P)=\sum\limits_{e\in P}r_i(e)$;
-				\item Путь $P$ -- допустимый, если $r_i(P)\leq R_i$;
+				\item Путь $P$ -- допустимый, если $r_i(P)\leq R_i$.
 			\end{itemize}
 		\end{block}
 	\end{columns}
@@ -343,7 +455,7 @@
 \begin{frame}
 	\frametitle{Чем решать?}
 	\begin{block}{Алгоритм Йена}
-		Алгоритм находит точное решение, путем перебора $k$-кратчайших путей, до тех пор, пока не будет найден допустимый путь.
+		Алгоритм находит точное решение путем перебора $k$-кратчайших путей, до тех пор пока не будет найден допустимый путь.
 
 		\begin{itemize}
 			\item[$+$] Надежный и находит точное решение
@@ -368,28 +480,33 @@
 
 \begin{frame}
 	\frametitle{Вперед в пустошь}
-	Разобравшись с делами Макс решает пересечь великую пустошь, однако старые карты теперь не работают.
-
-	Задача канадского путешественника.
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/White.png}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Вперед в пустошь}
-	\begin{block}{Задача канадского путешественника (упрощенная)}
-		\begin{tabular}{>{\bfseries}rp{.75\textwidth}}
-			Дано: & граф-карта $G=(V,E)$, реальный граф $H=(V,E')$, где $E'\subseteq E$, стартовая и целевая вершины $s$ и $t$.\\
+	\begin{block}{Задача канадского путешественника}
+		\begin{tabular}{>{\bfseries}rp{.85\textwidth}}
+			Дано: & граф-карта $G=(V,E)$, реальный граф $H=(V,E')$, где $E'\subseteq E$, стартовая и целевая вершины $s$ и $d$.\\
 			Вопрос: & существует ли такая стратегия $S$ прохождения графа, вес пути в которой будет не более чем в $q$ раз превосходить оптимальное значение кратчайшего пути в $H$.\\
 		\end{tabular}
 	\end{block}
 	\pause
-	Задача относится к классу $PSPACE$ и при этом $\sharp P$-сложной.
+	Задача относится к классу $PSPACE$ и при этом является $\sharp P$-сложной.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Вперед в пустошь}
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/White.png}
 \end{frame}
 
 \section{Киберпространство}
 \begin{frame}
 	\frametitle{Киберпространство}
-	Кейс выходит на сцену и получает заказ от искуственного интеллекта.
-	Рассмотрим задачу RCSP, но с точки зрения QoL.
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/neucomancer.jpg}
 \end{frame}
 
 \begin{frame}
@@ -403,7 +520,7 @@
 \begin{frame}
 	\frametitle{Как решать?}
 \begin{block}{Случай двух ограничений}
-	Алгоритм \texttt{P+RT} основан на построении <<мостов>> в процессе работы, которые создают допустимые подпути. После на основе данных мостов восстанавливает топологию исходного графа и находит апроксимацию допустимого пути.
+	Алгоритм \texttt{P+RT} основан на построении в процессе работы <<мостов>>, которые создают допустимые подпути. Затем на основе данных мостов алгоритм восстанавливает топологию исходного графа и находит аппроксимацию допустимого пути.
 
 	Алгоритм является $(3\cdot(1+\varepsilon),2)$-приближенным.
 
@@ -411,7 +528,7 @@
 \end{block}
 \pause
 \begin{block}{Случай произвольного числа ограничений}
-	Алгоритм $(1+\varepsilon)(l-1)$-\texttt{Approx} основан на построении вспомогательного графа, согласно вычисленным верхним и нижним оценкам допустимого решения, в котором выполняется поиск приближенного решения.
+	Алгоритм $(1+\varepsilon)(l-1)$-\texttt{Approx} основан на построении вспомогательного графа, в котором выполняется поиск приближенного решения, согласно вычисленным верхним и нижним оценкам допустимого решения.
 
 	Алгоритм находит $(1+\varepsilon)(l-1)$-приближение.
 
@@ -421,19 +538,22 @@
 
 \begin{frame}
 	\frametitle{Слияние ИскИнов}
-	Приводит к коллапсу вселенной и слиянию всех возможных реальностей.
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/Collapse.png}
 \end{frame}
 
 \section{Неизвестное}
 
 \begin{frame}
 	\frametitle{Расхитители древности}
-	Др. Джонс входит в очередную гробницу, которая хранит информацию о старом мире до коллапса.
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/tomb.png}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Расхитители древности}
-	Определения
+	\centering
+	\includegraphics[height=.7\paperheight]{Pics/facility.png}
 \end{frame}
 
 \begin{frame}
